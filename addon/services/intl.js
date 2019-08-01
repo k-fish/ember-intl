@@ -5,6 +5,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import Adapter from 'ember-intl/adapters/default';
 import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
 import IntlMessageFormat from '@ember-intl/intl-messageformat';
 import { getOwner } from '@ember/application';
@@ -90,6 +91,11 @@ export default Service.extend(Evented, {
     }
 
     this._owner = getOwner(this);
+    this._adapter = this._owner.lookup('ember-intl@adapter:default');
+
+    if (!this._adapter) {
+      this._owner.register('ember-intl@adapter:default', Adapter);
+    }
     this._adapter = this._owner.lookup('ember-intl@adapter:default');
 
     this._formatters = {
